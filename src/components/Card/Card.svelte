@@ -15,10 +15,10 @@
   export let clickActionType: ClickActionType = ClickActionTypes.None;
 
   const cardStore: CardStore = createCardStore(open, small);
+  let state: CardState = cardStore.stateDefault;
 
-  let cardState: CardState = cardStore.stateDefault;
-  const unsubscribe = cardStore.subscribe((state) => {
-    cardState = state;
+  const unsubscribe = cardStore.subscribe((storeState) => {
+    state = storeState;
   });
 
   const clickFunction = actionHandlerDict[clickActionType];
@@ -29,9 +29,7 @@
 </script>
 
 <button
-  class={`card ${cardState.open ? "" : "closed"} ${
-    cardState.small ? "cardSmall" : ""
-  }`}
+  class={`card ${state.open ? "" : "closed"} ${state.small ? "cardSmall" : ""}`}
   on:click={onClick}
 >
   <div class="front">
