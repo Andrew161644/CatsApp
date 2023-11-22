@@ -6,18 +6,14 @@
   import { createCountStore } from "./store";
 
   export let min = 0;
-  export let max = 0;
+  export let max = 1;
 
   const countStore = createCountStore(min, max);
 
-  let countValue: number;
-  let btnIncDisabled = false;
-  let btnDecDisabled = false;
+  let state: CounterState = countStore.stateDefault;
 
   const unsubscribe = countStore.subscribe((counterState: CounterState) => {
-    countValue = counterState.value;
-    btnDecDisabled = counterState.buttonDecDisabled;
-    btnIncDisabled = counterState.buttonIncDisabled;
+    state = counterState;
   });
 
   const onAddClick = () => countStore.changeValue(1);
@@ -28,12 +24,12 @@
 </script>
 
 <div class="counter">
-  <h5>The count is {countValue}</h5>
-  <div>
-    <Button on:click={onAddClick} disabled={btnIncDisabled}>
+  <h5>The count is {state.value}</h5>
+  <div class="buttons">
+    <Button on:click={onAddClick} disabled={state.buttonIncDisabled}>
       <Label>+</Label>
     </Button>
-    <Button on:click={onDecClick} disabled={btnDecDisabled}>
+    <Button on:click={onDecClick} disabled={state.buttonDecDisabled}>
       <Label>-</Label>
     </Button>
     <Button on:click={onResetClick}>
@@ -47,6 +43,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 220px;
+  }
+  .buttons {
+    display: flex;
   }
 </style>

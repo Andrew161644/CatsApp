@@ -1,9 +1,12 @@
 <script lang="ts">
+  import Counter from "../../components/Counter/Counter.svelte";
   import Card from "../../components/Card/Card.svelte";
 </script>
 
 <div class="app">
-  <Card />
+  <Card open={true} />
+  <Card open={false} />
+  <Counter max={10} min={1} />
 </div>
 
 <style>
