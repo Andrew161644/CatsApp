@@ -30,7 +30,7 @@
 
 <button
   class={`card ${cardState.open ? "" : "closed"} ${
-    cardState.small ? "small" : ""
+    cardState.small ? "cardSmall" : ""
   }`}
   on:click={onClick}
 >
@@ -49,9 +49,9 @@
     width: 14rem;
     height: 20rem;
     background: palegoldenrod;
-    border-radius: 2em;
+    border-radius: 2rem;
     transform: rotateY(0deg);
-    transition: transform 0.2s;
+    transition: transform 0.2s, width 0.2s, height 0.2s;
     transform-style: preserve-3d;
     padding: 0;
     user-select: none;
@@ -62,12 +62,9 @@
     transform: rotateY(180deg);
   }
 
-  .card.small {
-    transform: scale(0.6);
-  }
-
-  .card.closed.small {
-    transform: rotateY(180deg) scale(0.6);
+  .cardSmall {
+    width: 7rem;
+    height: 10rem;
   }
 
   .front,
@@ -80,13 +77,9 @@
     left: 0;
     top: 0;
     backface-visibility: hidden;
-    border-radius: 2em;
+    border-radius: 2rem;
     box-sizing: border-box;
-    padding: 2em;
-  }
-
-  .front {
-    background-size: 8em 8em, 8em 8em;
+    padding: 2rem;
   }
 
   .back {

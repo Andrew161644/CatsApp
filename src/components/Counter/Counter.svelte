@@ -40,6 +40,7 @@
 
 <style>
   .counter {
+    user-select: none;
     display: flex;
     flex-direction: column;
     align-items: center;

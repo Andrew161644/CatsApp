@@ -4,8 +4,8 @@
 </script>
 
 <div class="app">
-  <Card small={true} clickActionType={"Close"} />
-  <Card open={false} clickActionType={"Resize"} />
+  <Card small={false} clickActionType={"Close"} />
+  <Card open={true} clickActionType={"Resize"} />
   <Counter max={10} min={1} />
 </div>
 
