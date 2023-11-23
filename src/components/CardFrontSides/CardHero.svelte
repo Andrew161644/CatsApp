@@ -6,8 +6,8 @@
 <div class="cardHero">
   <div class="print" />
   <div class="footer">
-    <h1>{health}</h1>
-    <h1>{power}</h1>
+    <div>{health}</div>
+    <div>{power}</div>
   </div>
 </div>
 

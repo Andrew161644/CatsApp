@@ -1,12 +1,10 @@
 <script lang="ts">
-  import Counter from "../../components/Counter/Counter.svelte";
   import Card from "../../components/Card/Card.svelte";
+  import { ClickActionTypes } from "../../components/Card/types";
 </script>
 
 <div class="app">
-  <Card small={false} clickActionType={"Close"} />
-  <Card open={true} clickActionType={"Resize"} />
-  <Counter max={10} min={1} />
+  <Card open={true} clickActionType={ClickActionTypes.Resize} />
 </div>
 
 <style>

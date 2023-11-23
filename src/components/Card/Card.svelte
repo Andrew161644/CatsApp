@@ -31,8 +31,10 @@
 <button
   class={`card ${state.open ? "" : "closed"} ${state.small ? "cardSmall" : ""}`}
   on:click={onClick}
+  style:--durationSize="0.2s"
+  style:--durationClose="0.2s"
 >
-  <div class="front">
+  <div class={`front ${state.small ? "frontSmall" : ""}`}>
     {#if frontCardComponent != undefined}<svelte:component
         this={frontCardComponent}
         health={10}
@@ -47,11 +49,16 @@
     width: 14rem;
     height: 20rem;
     background: palegoldenrod;
-    border-radius: 2rem;
     transform: rotateY(0deg);
-    transition: transform 0.2s, width 0.2s, height 0.2s;
+    border-radius: 2rem;
+    padding: 2rem;
+    transition:
+      padding var(--durationSize),
+      border-radius var(--durationSize),
+      transform var(--durationClose),
+      width var(--durationSize),
+      height var(--durationSize);
     transform-style: preserve-3d;
-    padding: 0;
     user-select: none;
     cursor: pointer;
   }
@@ -63,6 +70,8 @@
   .cardSmall {
     width: 7rem;
     height: 10rem;
+    border-radius: 1rem;
+    padding: 1rem;
   }
 
   .front,
@@ -75,9 +84,7 @@
     left: 0;
     top: 0;
     backface-visibility: hidden;
-    border-radius: 2rem;
     box-sizing: border-box;
-    padding: 2rem;
   }
 
   .back {
