@@ -1,6 +1,5 @@
 import { actionHandlerDict } from "./actionHandlerDict";
-import type { CardStore } from "./store";
-import type { ClickActionType } from "./types";
+import type { CardStore, ClickActionType } from "./types";
 
 export const onCardClick =
   (

@@ -1,11 +1,14 @@
-import type { CardStore } from "./store";
-import type { ClickActionType } from "./types";
+import { CardSizes, type CardStore, type ClickActionType } from "./types";
 
 export const actionHandlerDict: Record<
   ClickActionType,
   (cardStore: CardStore) => void
 > = {
   None: () => {},
-  Close: (cardStore: CardStore) => cardStore.setCardOpen(),
-  Resize: (cardStore: CardStore) => cardStore.setCardSize(),
+  Open: (cardStore: CardStore) => cardStore.setCardOpen(false),
+  Close: (cardStore: CardStore) => cardStore.setCardOpen(false),
+  ShowInfo: (cardStore: CardStore) => {},
+  ResizeSmall: (cardStore: CardStore) => cardStore.setCardSize(CardSizes.Small),
+  ResizeNormal: (cardStore: CardStore) =>
+    cardStore.setCardSize(CardSizes.Normal),
 };

@@ -2,45 +2,41 @@
   import { onDestroy } from "svelte";
   import type { ComponentType } from "svelte";
   import CardHero from "../CardFrontSides/CardHero.svelte";
-  import { createCardStore, type CardStore } from "./store";
-  import {
-    ClickActionTypes,
-    type ClickActionType,
-    type CardState,
-  } from "./types";
+  import { createCardStore } from "./store";
+  import type { CardState, CardStore, CardItem } from "./types";
   import { onCardClick } from "./onCardClick";
 
-  export let open = true;
-  export let small = false;
-  export let clickRightButton: ClickActionType = ClickActionTypes.None;
-  export let clickLeftButton: ClickActionType = ClickActionTypes.None;
+  export let card: CardItem;
+  export let sizeAnimationSpeed = "0.2s";
+  export let closeAnimationSpeed = "0.2s";
 
-  const cardStore: CardStore = createCardStore(open, small);
+  const cardStore: CardStore = createCardStore(card);
+  $: cardStore.set(card);
+
   let state: CardState = cardStore.stateDefault;
 
   const unsubscribe = cardStore.subscribe((storeState) => {
     state = storeState;
   });
 
-  const onClick = onCardClick(cardStore, clickRightButton, clickLeftButton);
+  const onClick = onCardClick(
+    cardStore,
+    state.clickRightButton,
+    state.clickLeftButton
+  );
 
-  let frontCardComponent: ComponentType | undefined = CardHero;
   onDestroy(unsubscribe);
 </script>
 
 <button
-  class={`card ${state.open ? "" : "closed"} ${state.small ? "small" : ""}`}
+  class={`card ${state.open ? "" : "closed"} ${state.size}`}
   on:mousedown={onClick}
   on:contextmenu|preventDefault
-  style:--durationSize="0.2s"
-  style:--durationClose="0.2s"
+  style:--durationSize={sizeAnimationSpeed}
+  style:--durationClose={closeAnimationSpeed}
 >
-  <div class={`front ${state.small ? "small" : ""}`}>
-    {#if frontCardComponent != undefined}<svelte:component
-        this={frontCardComponent}
-        health={10}
-        power={100}
-      />{/if}
+  <div class={`front ${state.size}`}>
+    <CardHero health={state.health} power={state.power} />
   </div>
   <div class="back" />
 </button>
