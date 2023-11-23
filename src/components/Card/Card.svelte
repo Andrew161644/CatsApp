@@ -12,7 +12,8 @@
 
   export let open = true;
   export let small = false;
-  export let clickActionType: ClickActionType = ClickActionTypes.None;
+  export let clickRightButton: ClickActionType = ClickActionTypes.None;
+  export let clickLeftButton: ClickActionType = ClickActionTypes.None;
 
   const cardStore: CardStore = createCardStore(open, small);
   let state: CardState = cardStore.stateDefault;
@@ -21,20 +22,36 @@
     state = storeState;
   });
 
-  const clickFunction = actionHandlerDict[clickActionType];
-  const onClick = () => clickFunction(cardStore);
+  const onClickRight = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    switch (e.button) {
+      case 2: {
+        const clickFunc = actionHandlerDict[clickRightButton];
+        clickFunc(cardStore);
+        break;
+      }
+      case 0: {
+        const clickFunc = actionHandlerDict[clickLeftButton];
+        clickFunc(cardStore);
+        break;
+      }
+    }
+  };
 
   let frontCardComponent: ComponentType | undefined = CardHero;
   onDestroy(unsubscribe);
 </script>
 
 <button
-  class={`card ${state.open ? "" : "closed"} ${state.small ? "cardSmall" : ""}`}
-  on:click={onClick}
+  class={`card ${state.open ? "" : "closed"} ${state.small ? "small" : ""}`}
+  on:mousedown={onClickRight}
+  on:contextmenu|preventDefault
   style:--durationSize="0.2s"
   style:--durationClose="0.2s"
 >
-  <div class={`front ${state.small ? "frontSmall" : ""}`}>
+  <div class={`front ${state.small ? "small" : ""}`}>
     {#if frontCardComponent != undefined}<svelte:component
         this={frontCardComponent}
         health={10}
@@ -51,9 +68,7 @@
     background: palegoldenrod;
     transform: rotateY(0deg);
     border-radius: 2rem;
-    padding: 2rem;
     transition:
-      padding var(--durationSize),
       border-radius var(--durationSize),
       transform var(--durationClose),
       width var(--durationSize),
@@ -63,19 +78,28 @@
     cursor: pointer;
   }
 
+  .card.small {
+    width: 7rem;
+    height: 10rem;
+    border-radius: 1rem;
+  }
+
   .card.closed {
     transform: rotateY(180deg);
   }
 
-  .cardSmall {
-    width: 7rem;
-    height: 10rem;
-    border-radius: 1rem;
+  .card .front {
+    padding: 2rem;
+    transition: padding var(--durationSize);
+  }
+
+  .card .front.small {
     padding: 1rem;
   }
 
-  .front,
+  .card .front,
   .back {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,7 +111,7 @@
     box-sizing: border-box;
   }
 
-  .back {
+  .card .back {
     transform: rotateY(180deg);
   }
 </style>

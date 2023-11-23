@@ -1,7 +1,19 @@
+import type { Values } from "../../utils";
+
 export interface Card {
-  closed: boolean;
+  open: boolean;
+  small: boolean;
 }
-export interface HeroCardItem extends Card {
+
+export interface HeroCardItem {
   power: number;
   health: number;
 }
+
+export const CardSizes = {
+  Small: "small",
+  Normal: "normal",
+  Huge: "huge",
+} as const;
+
+export type CardSize = Values<typeof CardSizes>;

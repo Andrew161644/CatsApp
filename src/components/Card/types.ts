@@ -1,9 +1,7 @@
+import type { Card } from "../../types";
 import type { Values } from "../../utils";
 
-export interface CardState {
-  open: boolean;
-  small: boolean;
-}
+export type CardState = Card;
 
 export const ClickActionTypes = {
   None: "None",

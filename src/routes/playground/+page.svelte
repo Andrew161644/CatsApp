@@ -4,7 +4,12 @@
 </script>
 
 <div class="app">
-  <Card open={true} clickActionType={ClickActionTypes.Resize} />
+  <Card
+    open={true}
+    small={true}
+    clickRightButton={ClickActionTypes.Resize}
+    clickLeftButton={ClickActionTypes.Close}
+  />
 </div>
 
 <style>
