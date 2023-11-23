@@ -8,7 +8,7 @@
     type ClickActionType,
     type CardState,
   } from "./types";
-  import { actionHandlerDict } from "./actionHandlerDict";
+  import { onCardClick } from "./onCardClick";
 
   export let open = true;
   export let small = false;
@@ -22,23 +22,7 @@
     state = storeState;
   });
 
-  const onClick = (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    switch (e.button) {
-      case 2: {
-        const clickFunc = actionHandlerDict[clickRightButton];
-        clickFunc(cardStore);
-        break;
-      }
-      case 0: {
-        const clickFunc = actionHandlerDict[clickLeftButton];
-        clickFunc(cardStore);
-        break;
-      }
-    }
-  };
+  const onClick = onCardClick(cardStore, clickRightButton, clickLeftButton);
 
   let frontCardComponent: ComponentType | undefined = CardHero;
   onDestroy(unsubscribe);
