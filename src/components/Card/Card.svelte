@@ -22,7 +22,7 @@
     state = storeState;
   });
 
-  const onClickRight = (e: MouseEvent) => {
+  const onClick = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -46,7 +46,7 @@
 
 <button
   class={`card ${state.open ? "" : "closed"} ${state.small ? "small" : ""}`}
-  on:mousedown={onClickRight}
+  on:mousedown={onClick}
   on:contextmenu|preventDefault
   style:--durationSize="0.2s"
   style:--durationClose="0.2s"
