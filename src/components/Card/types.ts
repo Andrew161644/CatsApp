@@ -1,14 +1,16 @@
 import type { Writable } from "svelte/store";
 import type { Values } from "../../utils";
-import type { HeroCardItem } from "../../types";
 import type {
   ClickableLeft,
   ClickableRight,
-} from "../../types/clickcable/types";
+  HeroCardItem,
+  Hovered,
+} from "../../types";
 
 export type CardState = CardItem;
 
 export type CardStore = Writable<CardState> & {
+  lockedAnimation: boolean;
   stateDefault: CardState;
   setCardOpen: (open: boolean) => void;
   setCardSize: (size: CardSize) => void;
@@ -16,15 +18,17 @@ export type CardStore = Writable<CardState> & {
 
 export type CardItem = HeroCardItem &
   ClickableLeft &
+  Hovered &
   ClickableRight & {
     open: boolean;
     size: CardSize;
   };
 
 export const CardSizes = {
+  None: "none",
   Small: "small",
   Normal: "normal",
-  Huge: "huge",
+  Big: "big",
 } as const;
 
 export type CardSize = Values<typeof CardSizes>;

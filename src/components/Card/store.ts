@@ -2,7 +2,8 @@ import { writable, type Readable, type Writable } from "svelte/store";
 import type { CardItem, CardSize, CardState, CardStore } from "./types";
 
 export function createCardStore(card: CardItem): CardStore {
-  const stateDefault: CardState = card;
+  const lockedAnimation = false;
+  const stateDefault: CardState = { ...card };
   const { subscribe, update, set } = writable<CardState>(stateDefault);
 
   const setCardOpen = () => {
@@ -21,6 +22,7 @@ export function createCardStore(card: CardItem): CardStore {
 
   return {
     set,
+    lockedAnimation,
     update,
     stateDefault,
     subscribe,

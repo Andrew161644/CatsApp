@@ -31,5 +31,6 @@
     display: flex;
     flex: 1;
     justify-content: space-between;
+    align-items: end;
   }
 </style>

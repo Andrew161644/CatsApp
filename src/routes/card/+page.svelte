@@ -1,29 +1,25 @@
 <script lang="ts">
-  import Card from "../../components/Card/Card.svelte";
   import { v4 as uuidv4 } from "uuid";
   import type { CardItem } from "../../components/Card/types";
-  import { ClickActionTypes } from "../../types";
+  import Card from "../../components/Card/Card.svelte";
+  import { AnimationActionsTypes } from "../../types";
 
   let card: CardItem = {
-    open: false,
-    clickRightButton: ClickActionTypes.ResizeNormal,
-    clickLeftButton: ClickActionTypes.ResizeSmall,
+    open: true,
+    clickRightButtonAnimate: AnimationActionsTypes.Close,
     health: 10,
     power: 15,
-    size: "small",
+    size: "none",
     id: uuidv4(),
   };
+
+  setTimeout(() => {
+    card.size = "big";
+  }, 1000);
 </script>
 
 <div class="app">
   <Card {card} />
-  <button
-    on:click={() => {
-      card.open = !card.open;
-    }}
-  >
-    Open
-  </button>
 </div>
 
 <style>

@@ -1,22 +1,21 @@
-import { MouseButtons } from "../../types";
-import type { ClickActionType } from "../../types/clickcable";
-import { actionHandlerDict } from "./actionHandlerDict";
+import { MouseButtons, type AnimationAction } from "../../types";
+import { animationCahngeFuncDict } from "./actionHandlerDict";
 import type { CardStore } from "./types";
 
-export const onCardClick =
+export const onMouseDown =
   (
     cardStore: CardStore,
-    clickRightButton?: ClickActionType,
-    clickLeftButton?: ClickActionType
+    clickRightButton?: AnimationAction,
+    clickLeftButton?: AnimationAction
   ) =>
   (e: MouseEvent) => {
     e.preventDefault();
-    const empyFunc = actionHandlerDict.None;
+    const empyFunc = animationCahngeFuncDict.None;
 
     switch (e.button) {
       case MouseButtons.Right: {
         const clickFunc = clickRightButton
-          ? actionHandlerDict[clickRightButton]
+          ? animationCahngeFuncDict[clickRightButton]
           : empyFunc;
 
         clickFunc(cardStore);
@@ -24,7 +23,7 @@ export const onCardClick =
       }
       case MouseButtons.Left: {
         const clickFunc = clickLeftButton
-          ? actionHandlerDict[clickLeftButton]
+          ? animationCahngeFuncDict[clickLeftButton]
           : empyFunc;
 
         clickFunc(cardStore);

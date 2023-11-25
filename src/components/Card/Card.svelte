@@ -3,7 +3,9 @@
   import CardHero from "../CardFrontSides/CardHero.svelte";
   import { createCardStore } from "./store";
   import type { CardState, CardStore, CardItem } from "./types";
-  import { onCardClick } from "./onCardClick";
+  import { onMouseDown } from "./onMouseDown";
+  import { animationCahngeFuncDict } from "./actionHandlerDict";
+  import { AnimationActionsTypes } from "../../types";
 
   export let card: CardItem;
   export let sizeAnimationSpeed = "0.2s";
@@ -21,11 +23,27 @@
     state = storeState;
   });
 
-  const onClick = onCardClick(
+  const onClickAnimation = onMouseDown(
     cardStore,
-    state.clickRightButton,
-    state.clickLeftButton
+    state.clickRightButtonAnimate,
+    state.clickLeftButtonAnimate
   );
+
+  const onClick = (e: MouseEvent) => {
+    onClickAnimation(e);
+  };
+
+  const onMouseEnter = () => {
+    const enterFunc =
+      animationCahngeFuncDict[state.onMouseEnter || AnimationActionsTypes.None];
+    enterFunc(cardStore);
+  };
+
+  const onMouseLeave = () => {
+    const leaveFunc =
+      animationCahngeFuncDict[state.onMouseLeave || AnimationActionsTypes.None];
+    leaveFunc(cardStore);
+  };
 
   onDestroy(unsubscribe);
 </script>
@@ -34,6 +52,8 @@
   class={`card ${state.open ? "" : "closed"} ${state.size}`}
   on:mousedown={onClick}
   on:contextmenu|preventDefault
+  on:mouseenter={onMouseEnter}
+  on:mouseleave={onMouseLeave}
   style:--durationSize={sizeAnimationSpeed}
   style:--durationClose={closeAnimationSpeed}
 >
@@ -44,12 +64,34 @@
 </button>
 
 <style>
+  :root {
+    --size-coeff-normal: 1.5;
+    --size-coeff-big: 2;
+
+    --height-small: 10rem;
+    --height-normal: calc(var(--height-small) * var(--size-coeff-normal));
+    --height-big: calc(var(--height-small) * var(--size-coeff-big));
+
+    --width-small: 7rem;
+    --width-normal: calc(var(--width-small) * var(--size-coeff-normal));
+    --width-big: calc(var(--width-small) * var(--size-coeff-big));
+
+    --border-radius-small: 1rem;
+    --border-radius-normal: calc(
+      var(--border-radius-small) * var(--size-coeff-normal)
+    );
+    --border-radius-big: calc(
+      var(--border-radius-small) * var(--size-coeff-big)
+    );
+
+    --padding-small: 1rem;
+    --padding-normal: calc(var(--padding-small) * var(--size-coeff-normal));
+    --padding-big: calc(var(--padding-small) * var(--size-coeff-big));
+  }
+
   .card {
-    width: 14rem;
-    height: 20rem;
     background: palegoldenrod;
     transform: rotateY(0deg);
-    border-radius: 2rem;
     transition:
       border-radius var(--durationSize),
       transform var(--durationClose),
@@ -60,10 +102,31 @@
     cursor: pointer;
   }
 
+  .card.big {
+    width: var(--width-big);
+    height: var(--height-big);
+    border-radius: var(--border-radius-big);
+  }
+
+  .card.normal {
+    width: var(--width-normal);
+    height: var(--height-normal);
+    border-radius: var(--border-radius-normal);
+  }
+
   .card.small {
-    width: 7rem;
-    height: 10rem;
-    border-radius: 1rem;
+    width: var(--width-small);
+    height: var(--height-small);
+    border-radius: var(--border-radius-small);
+  }
+
+  .card.none {
+    width: 0;
+    height: 0;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
   }
 
   .card.closed {
@@ -75,8 +138,22 @@
     transition: padding var(--durationSize);
   }
 
+  .card .front.big {
+    padding: var(--padding-big);
+  }
+
+  .card .front.normal {
+    padding: var(--padding-normal);
+  }
+
   .card .front.small {
-    padding: 1rem;
+    padding: var(--padding-small);
+  }
+
+  .card .front.none {
+    height: 0;
+    width: 0;
+    display: none;
   }
 
   .card .front,
