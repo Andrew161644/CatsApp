@@ -15,7 +15,6 @@
   onDestroy(unsubscribe);
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="hand">
   {#each handState.cards as card}
     <div class="cardWrapper">

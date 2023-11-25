@@ -1,24 +1,32 @@
+import { MouseButtons } from "../../types";
+import type { ClickActionType } from "../../types/clickcable";
 import { actionHandlerDict } from "./actionHandlerDict";
-import type { CardStore, ClickActionType } from "./types";
+import type { CardStore } from "./types";
 
 export const onCardClick =
   (
     cardStore: CardStore,
-    clickRightButton: ClickActionType,
-    clickLeftButton: ClickActionType
+    clickRightButton?: ClickActionType,
+    clickLeftButton?: ClickActionType
   ) =>
   (e: MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
+    const empyFunc = actionHandlerDict.None;
 
     switch (e.button) {
-      case 2: {
-        const clickFunc = actionHandlerDict[clickRightButton];
+      case MouseButtons.Right: {
+        const clickFunc = clickRightButton
+          ? actionHandlerDict[clickRightButton]
+          : empyFunc;
+
         clickFunc(cardStore);
         break;
       }
-      case 0: {
-        const clickFunc = actionHandlerDict[clickLeftButton];
+      case MouseButtons.Left: {
+        const clickFunc = clickLeftButton
+          ? actionHandlerDict[clickLeftButton]
+          : empyFunc;
+
         clickFunc(cardStore);
         break;
       }

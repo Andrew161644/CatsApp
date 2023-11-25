@@ -1,7 +1,8 @@
 <script lang="ts">
   import Card from "../../components/Card/Card.svelte";
-  import { ClickActionTypes, type CardItem } from "../../components/Card/types";
   import { v4 as uuidv4 } from "uuid";
+  import type { CardItem } from "../../components/Card/types";
+  import { ClickActionTypes } from "../../types";
 
   let card: CardItem = {
     open: false,

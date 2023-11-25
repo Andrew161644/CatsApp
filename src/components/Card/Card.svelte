@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
-  import type { ComponentType } from "svelte";
   import CardHero from "../CardFrontSides/CardHero.svelte";
   import { createCardStore } from "./store";
   import type { CardState, CardStore, CardItem } from "./types";
@@ -11,10 +10,13 @@
   export let closeAnimationSpeed = "0.2s";
 
   const cardStore: CardStore = createCardStore(card);
+
+  // Подписываем стор на изменение внешних пропсов
   $: cardStore.set(card);
 
   let state: CardState = cardStore.stateDefault;
 
+  // Подписываем состояние на изменение состояния стора
   const unsubscribe = cardStore.subscribe((storeState) => {
     state = storeState;
   });
