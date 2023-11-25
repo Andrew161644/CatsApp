@@ -1,5 +1,5 @@
 export {
   type ClickActionType,
   ClickActionTypes,
-  type IClickableRight,
+  type ClickableRight as IClickableRight,
 } from "./types";

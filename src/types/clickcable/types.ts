@@ -1,12 +1,12 @@
 import type { Values } from "../../utils";
 
-export interface IClickableRight {
+export type ClickableRight = {
   clickRightButton?: ClickActionType;
-}
+};
 
-export interface IClickableLeft {
+export type ClickableLeft = {
   clickLeftButton?: ClickActionType;
-}
+};
 
 export const ClickActionTypes = {
   None: "None",

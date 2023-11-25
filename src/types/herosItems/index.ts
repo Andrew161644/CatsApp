@@ -1,1 +1,1 @@
-export { type IHeroCardItem as HeroCardItem } from "./types";
+export { type HeroCardItem as HeroCardItem } from "./types";
