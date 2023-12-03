@@ -4,12 +4,16 @@
   import { createCardStore } from "./store";
   import type { CardState, CardStore, CardItem } from "./types";
   import { onMouseDown } from "./onMouseDown";
-  import { animationCahngeFuncDict } from "./actionHandlerDict";
-  import { AnimationActionsTypes } from "../../types";
+
+  import { animateFunction } from "./animateFunction";
+  import {
+    CARD_CLOSE_ANIMATION_DEFAULT_SPEED,
+    CARD_SIZE_ANIMATION_DEFAULT_SPEED,
+  } from "../../animationTiming";
 
   export let card: CardItem;
-  export let sizeAnimationSpeed = "0.2s";
-  export let closeAnimationSpeed = "0.2s";
+  export let sizeAnimationSpeed = CARD_SIZE_ANIMATION_DEFAULT_SPEED;
+  export let closeAnimationSpeed = CARD_CLOSE_ANIMATION_DEFAULT_SPEED;
 
   const cardStore: CardStore = createCardStore(card);
 
@@ -23,27 +27,21 @@
     state = storeState;
   });
 
-  const onClickAnimation = onMouseDown(
-    cardStore,
-    state.clickRightButtonAnimate,
-    state.clickLeftButtonAnimate
-  );
+  const onClick = (e: MouseEvent) =>
+    !state.runnedAnimations &&
+    onMouseDown(
+      e,
+      cardStore,
+      state.clickRightButtonAnimate,
+      state.clickLeftButtonAnimate
+    );
 
-  const onClick = (e: MouseEvent) => {
-    onClickAnimation(e);
-  };
+  const onMouseLeave = () =>
+    !state.runnedAnimations &&
+    animateFunction(cardStore, state.onMouseLeave || []);
 
-  const onMouseEnter = () => {
-    const enterFunc =
-      animationCahngeFuncDict[state.onMouseEnter || AnimationActionsTypes.None];
-    enterFunc(cardStore);
-  };
-
-  const onMouseLeave = () => {
-    const leaveFunc =
-      animationCahngeFuncDict[state.onMouseLeave || AnimationActionsTypes.None];
-    leaveFunc(cardStore);
-  };
+  const onMouseEnter = () =>
+    animateFunction(cardStore, state.onMouseEnter || []);
 
   onDestroy(unsubscribe);
 </script>
@@ -54,8 +52,8 @@
   on:contextmenu|preventDefault
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
-  style:--durationSize={sizeAnimationSpeed}
-  style:--durationClose={closeAnimationSpeed}
+  style:--durationSize={`${sizeAnimationSpeed}ms`}
+  style:--durationClose={`${closeAnimationSpeed}ms`}
 >
   <div class={`front ${state.size}`}>
     <CardHero health={state.health} power={state.power} />

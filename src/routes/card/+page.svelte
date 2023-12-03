@@ -6,15 +6,18 @@
 
   let card: CardItem = {
     open: true,
-    clickRightButtonAnimate: AnimationActionsTypes.Close,
+    clickRightButtonAnimate: [
+      { animationType: AnimationActionsTypes.Close, delay: 0 },
+      { animationType: AnimationActionsTypes.ResizeNormal, delay: 0 },
+      { animationType: AnimationActionsTypes.ResizeSmall, delay: 200 },
+    ],
     health: 10,
     power: 15,
     size: "none",
     id: uuidv4(),
   };
-
   setTimeout(() => {
-    card.size = "big";
+    card.size = "small";
   }, 1000);
 </script>
 

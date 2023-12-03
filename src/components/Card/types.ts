@@ -10,9 +10,9 @@ import type {
 export type CardState = CardItem;
 
 export type CardStore = Writable<CardState> & {
-  lockedAnimation: boolean;
   stateDefault: CardState;
-  setCardOpen: (open: boolean) => void;
+  setCardOpen: () => void;
+  setAnimationRunning: (lock: boolean) => void;
   setCardSize: (size: CardSize) => void;
 };
 
@@ -22,6 +22,8 @@ export type CardItem = HeroCardItem &
   ClickableRight & {
     open: boolean;
     size: CardSize;
+  } & {
+    runnedAnimations?: boolean;
   };
 
 export const CardSizes = {

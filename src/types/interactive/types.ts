@@ -1,16 +1,16 @@
 import type { Values } from "../../utils";
 
 export type Hovered = {
-  onMouseEnter?: AnimationAction;
-  onMouseLeave?: AnimationAction;
+  onMouseEnter?: RunAnimationIntent[];
+  onMouseLeave?: RunAnimationIntent[];
 };
 
 export type ClickableRight = {
-  clickRightButtonAnimate?: AnimationAction;
+  clickRightButtonAnimate?: RunAnimationIntent[];
 };
 
 export type ClickableLeft = {
-  clickLeftButtonAnimate?: AnimationAction;
+  clickLeftButtonAnimate?: RunAnimationIntent[];
 };
 
 export const AnimationActionsTypes = {
@@ -23,3 +23,8 @@ export const AnimationActionsTypes = {
 } as const;
 
 export type AnimationAction = Values<typeof AnimationActionsTypes>;
+
+export type RunAnimationIntent = {
+  animationType: AnimationAction;
+  delay: number;
+};

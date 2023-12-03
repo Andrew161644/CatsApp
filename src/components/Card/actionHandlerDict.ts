@@ -6,8 +6,8 @@ export const animationCahngeFuncDict: Record<
   (cardStore: CardStore) => void
 > = {
   None: () => {},
-  Open: (cardStore: CardStore) => cardStore.setCardOpen(false),
-  Close: (cardStore: CardStore) => cardStore.setCardOpen(false),
+  Open: (cardStore: CardStore) => cardStore.setCardOpen(),
+  Close: (cardStore: CardStore) => cardStore.setCardOpen(),
   ResizeSmall: (cardStore: CardStore) => cardStore.setCardSize(CardSizes.Small),
   ResizeNormal: (cardStore: CardStore) =>
     cardStore.setCardSize(CardSizes.Normal),

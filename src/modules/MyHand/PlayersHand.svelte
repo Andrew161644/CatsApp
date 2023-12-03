@@ -9,8 +9,8 @@
     const card: CardItem = {
       ...phc,
       size: CardSizes.Small,
-      onMouseEnter: "ResizeNormal",
-      onMouseLeave: "ResizeSmall",
+      onMouseEnter: [{ animationType: "ResizeNormal", delay: 0 }],
+      onMouseLeave: [{ animationType: "ResizeSmall", delay: 0 }],
     };
     return card;
   });

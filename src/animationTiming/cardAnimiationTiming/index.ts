@@ -1,0 +1,4 @@
+export {
+  CARD_CLOSE_ANIMATION_DEFAULT_SPEED,
+  CARD_SIZE_ANIMATION_DEFAULT_SPEED,
+} from "./cardDefaultAnimation";

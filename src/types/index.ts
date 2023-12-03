@@ -6,4 +6,5 @@ export {
   type ClickableRight,
   type ClickableLeft,
   type Hovered,
+  type RunAnimationIntent,
 } from "./interactive";
